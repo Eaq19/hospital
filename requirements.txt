@@ -1,0 +1,2 @@
+Flask = pip install Flask
+SQLAlchemy = pip install sqlalchemy

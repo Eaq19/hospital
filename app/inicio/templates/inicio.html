@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+
+{% block title %}HUS{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="textBox">
+            <h2>Hospital Universitario de la Samaritana</h2>
+            <p>Somos una Empresa de Servicios de Salud de Alta y Mediana Complejidad, centro de referencia para el
+                Departamento de Cundinamarca, cabeza de red de 37 hospitales del Departamento, con una cobertura de 116
+                municipios, que pasan los dos millones de habitantes, con 86 años de calidad en actividad docente,
+                científica y asistencial, que nos dan el respaldo para ofrecerle medicina de gran calidad, con un equipo
+                de profesionales de la salud de gran experiencia y calidez. Su experiencia de más de 85 años lo han
+                transformado en el epicentro de atención de gran volumen de patologías relacionadas con trauma, con
+                mayor énfasis en neurocirugía, ortopedia, cirugía general y cirugía plástica. Cirugía Bariatrica, entre
+                otras especialidades.</p>
+            <a href="#">Iniciar Sesión</a>
+        </div>
+
+        <div class="imgBox">
+            <img src="{{ url_for('static', filename='images/doctor.png') }}"
+                alt="Doctores" class="doctor-img">
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <section>
+        <div class="circle"></div>
+
+        <header>
+            <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="HUS" class="logo"></a>
+            <ul>
+                <li><a href="">Inicio</a></li>
+                <li><a href="">Entrar</a></li>
+                <li><a href="">Regístrate</a></li>
+            </ul>
+        </header>
+
+        {% block content %}{% endblock %}
+    </section>
+
+</body>
+</html>
