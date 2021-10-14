@@ -15,7 +15,42 @@
 </head>
 <body>
 
-    
+    <!-- Menú de navegación -->
+    <header>
+        <nav role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="{{ url_for('inicio.inicio') }}" class="brand-logo">
+                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
+                        alt="HUS" class="logo">
+                </a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'iniciarSesion' else '' }}">
+                        <a href="{{ url_for('autenticacion.iniciar_sesion') }}">Iniciar Sesión</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'crearCuenta' else '' }}">
+                        <a href="{{ url_for('autenticacion.crear_cuenta') }}">Crear Cuenta</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'inicio' else '' }}">
+                        <a href="{{ url_for('inicio.inicio') }}">Inicio</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            {% block contenido %}{% endblock %}
+        </div>
+    </header>
 
     <!--  Scripts-->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
