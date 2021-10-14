@@ -7,24 +7,21 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>{% block title %}{% endblock %}</title>
 
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/myStyles.css') }}">
 </head>
 <body>
 
-    <section>
-        <div class="circle"></div>
+    
 
-        <header>
-            <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="HUS" class="logo"></a>
-            <ul>
-                <li><a href="">Inicio</a></li>
-                <li><a href="">Entrar</a></li>
-                <li><a href="">Regístrate</a></li>
-            </ul>
-        </header>
-
-        {% block content %}{% endblock %}
-    </section>
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/myJsOptions.js') }}"></script>
 
 </body>
 </html>
