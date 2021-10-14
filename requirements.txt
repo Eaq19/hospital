@@ -1,2 +1,4 @@
 Flask = pip install Flask
 SQLAlchemy = pip install sqlalchemy
+WTForms = pip install -U Flask-WTF
+Flask_login = pip install flask-login
