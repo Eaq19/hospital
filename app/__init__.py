@@ -15,5 +15,8 @@ def create_app():
 
     from .autenticacion import autenticacion_blueprints
     app.register_blueprint(autenticacion_blueprints)
+    
+    from .paciente import paciente_blueprints
+    app.register_blueprint(paciente_blueprints)
 
     return app
