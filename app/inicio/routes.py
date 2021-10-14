@@ -1,8 +1,8 @@
-from flask import  render_template
+from flask import render_template
 
-from . import inicio_bp
+from . import inicio_blueprints
 
 
-@inicio_bp.route("/")
+@inicio_blueprints.route("/")
 def inicio():
     return render_template('inicio.html')
