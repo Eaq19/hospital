@@ -53,12 +53,19 @@ def iniciar_sesion():
     if form.validate_on_submit():
         user = get_user(form.usuario.data)
         if user is not None and user.check_password(form.password.data):
-            return redirect(url_for('inicio.inicio'))
-            login_user(user, remember=form.remember_me.data)
-            next_page = request.args.get('next')
+            page = ''
+            if user.getDocumentType().getId() == 1 :
+                page = 'inicio.inicio'
+            elif user.getDocumentType().getId() == 2 :
+                page = 'paciente.paciente_index'
+            elif user.getDocumentType().getId() == 3 :
+                page = 'doctor.doctor_index'
+
+           #login_user(user, remember=form.remember_me.data)
+            #next_page = request.args.get('next')
             
-            if not next_page or url_parse(next_page).netloc != '':
-                next_page = url_for('inicio.inicio')
+            #if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for(page)
                 
             return redirect(next_page)
     return render_template('iniciar_sesion.html', form=form)
