@@ -19,4 +19,13 @@ def create_app():
     from .paciente import paciente_blueprints
     app.register_blueprint(paciente_blueprints)
 
+    from .appointment import appointment_blueprints
+    app.register_blueprint(appointment_blueprints)
+
+    from .doctor import doctor_blueprints
+    app.register_blueprint(doctor_blueprints)
+
+    from .user import user_blueprints
+    app.register_blueprint(user_blueprints)
+
     return app

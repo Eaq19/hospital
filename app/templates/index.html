@@ -40,10 +40,46 @@
 
                 <ul class="right hide-on-med-and-down">
                     <li
-                        class="{{ 'active' if active_page == 'inicio' else '' }}">
+                        class="{{ 'active' if active_page == 'Perfil' else '' }}">
+                        <a href="{{ url_for('usuario.profile_index') }}">Perfil</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'Usuarios' else '' }}">
+                        <a href="{{ url_for('usuario.user_index') }}">Usuarios</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'Cita' else '' }}">
+                        <a href="{{ url_for('cita.appointment_index') }}">Citas</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'doctor' else '' }}">
+                        <a href="{{ url_for('doctor.doctor_index') }}">Medicos</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'Paciente' else '' }}">
+                        <a href="{{ url_for('paciente.paciente_index') }}">Pacientes</a>
+                    </li>
+                </ul>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'Inicio' else '' }}">
                         <a href="{{ url_for('inicio.inicio') }}">Inicio</a>
                     </li>
                 </ul>
+                
             </div>
         </nav>
 
