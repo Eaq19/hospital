@@ -1,11 +1,37 @@
 {% extends "index.html" %}
 
-{% block title %}Paciente{% endblock %}
+{% set active_page = "iniciarSesion" %}
 
-{% block content %}
+{% block title %}IniciarSesion{% endblock %}
+
+{% block contenido %}
 
     <div class="input-field col s12" style="margin-top: 4rem;">
-        <h3>Pacientes</h3>
+        <h4>Pacientes</h4>
+    </div>
+
+    <!-- contenedor -->
+    <div class="row" style="margin-top: 2rem;">
+
+        <!-- card -->
+        <div class="col s6">
+            <div class="card" style="margin-top: 0px;">
+                <div class="card-image">
+                    <img src="{{ url_for('static', filename='images/doctor_img3.jpg') }}" alt="Doctor y paciente">
+                    <span class="card-title">Hospital Universitario de la Samaritana</span>
+                </div>
+                <div class="card-content">
+                    <p>¿Aún no tienes cuenta? 
+                        <a class="blue-text" href="{{ url_for('autenticacion.crear_cuenta') }}">
+                            Regístrate
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        
+            
     </div>
     
 {% endblock %}

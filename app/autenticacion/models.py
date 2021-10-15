@@ -22,7 +22,9 @@ class User():
 """ Lista de usuaruios para hacer pruebas """
 users = []
 def get_user(nombre):
+    users.append( User(1, 'prueba', 'prueba', 'prueba') )
     for user in users:
         if user.nombre == nombre:
             return user
     return None
+

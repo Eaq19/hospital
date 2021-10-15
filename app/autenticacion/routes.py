@@ -48,11 +48,12 @@ def iniciar_sesion():
         return redirect(url_for('inicio.inicio'))
     
     form = InciarSesionForm()
+    #return redirect(url_for('paciente.paciente_index'))
     
     if form.validate_on_submit():
         user = get_user(form.usuario.data)
-        
         if user is not None and user.check_password(form.password.data):
+            return redirect(url_for('inicio.inicio'))
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
             
