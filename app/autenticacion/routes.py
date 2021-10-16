@@ -43,7 +43,6 @@ def crear_cuenta():
 
 @autenticacion_blueprints.route("/iniciar_sesion", methods=['GET', 'POST'])
 def iniciar_sesion():
-    print(current_user)
     if current_user.is_authenticated:
         return redirect(url_for('inicio.inicio'))
 
@@ -52,11 +51,11 @@ def iniciar_sesion():
         user = get_user(form.usuario.data)
         if user is not None and user.check_password(form.password.data):
             page = ''
-            if user.getDocumentType().getId() == 1:
+            if user.get_type() == 1:
                 page = 'administrador.administrador_index'
-            elif user.getDocumentType().getId() == 2:
+            elif user.get_type() == 2:
                 page = 'medico.medico_index'
-            elif user.getDocumentType().getId() == 3:
+            elif user.get_type() == 3:
                 page = 'paciente.paciente_index'
 
             login_user(user, remember=True)
