@@ -9,3 +9,5 @@ $(document).ready(function(){
 $('select').formSelect();
 });
 /* fin Selects */
+
+$(".dropdown-trigger").dropdown({ hover: true });
