@@ -33,6 +33,9 @@ class User():
     def set_is_authenticated(self, is_authenticated):
         self.is_authenticated = is_authenticated
 
+    def get_is_authenticated(self):
+        return self.is_authenticated
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
 

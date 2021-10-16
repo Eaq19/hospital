@@ -29,6 +29,17 @@
         <nav role="navigation">
             <div class="nav-wrapper container">
 
+
+                <!-- Cerrar Sesion -->
+                {% if current_user.is_authenticated %}
+
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="{{ url_for('autenticacion.logout') }}">Cerrar Sesión</a>
+                    </li>
+                </ul>
+                {% endif %}
+
                 <!-- user sin loguear -->
                 {% if current_user.is_anonymous %}
                 <a id="logo-container" class="brand-logo" href="{{ url_for('inicio.inicio') }}">
@@ -114,7 +125,6 @@
                     </li>
                 </ul>
                 {% endif %}
-
                 {% endif %}
 
             </div>
