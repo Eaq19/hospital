@@ -21,6 +21,10 @@ Integration with Flask-restplus, Flask-Cors, Flask-Testing, Flask-SQLalchemy,and
 Install with pip:
 
 ```
+py -3 -m venv venv
+pip install virtualenv
+venv\Scripts\activate
+pip install --upgrade pip
 $ pip install -r requirements.txt
 ```
 
