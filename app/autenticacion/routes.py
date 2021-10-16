@@ -41,17 +41,18 @@ from .models import get_user
 
 @autenticacion_blueprints.route("/iniciar_sesion", methods=['GET', 'POST'])
 def iniciar_sesion():
-    """ form = InciarSesionForm()
-    return render_template('iniciar_sesion.html', form=form) """
-    
+    print(current_user)
     if current_user.is_authenticated:
         return redirect(url_for('inicio.inicio'))
     
     form = InciarSesionForm()
     #return redirect(url_for('paciente.paciente_index'))
-    
+    print("Paso 1.1")
     if form.validate_on_submit():
         user = get_user(form.usuario.data)
+        print("Paso 1.2")
+        print(user)
+        print(form)
         if user is not None and user.check_password(form.password.data):
             page = ''
             if user.getDocumentType().getId() == 1 :
@@ -60,17 +61,25 @@ def iniciar_sesion():
                 page = 'paciente.paciente_index'
             elif user.getDocumentType().getId() == 3 :
                 page = 'doctor.doctor_index'
-
-           #login_user(user, remember=form.remember_me.data)
-            #next_page = request.args.get('next')
+            print("Paso 1")
+            login_user(user, remember=True)
+            print("Paso 2")
+            next_page = request.args.get('next')
+            print("Paso 3")
+            user.set_is_authenticated(True)
+            if not next_page or url_parse(next_page).netloc != '':
+                print("Paso 4")
+                next_page = url_for(page)
             
-            #if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for(page)
-                
+            print("Paso 5")
             return redirect(next_page)
     return render_template('iniciar_sesion.html', form=form)
     
-    
+@autenticacion_blueprints.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('autenticacion.iniciar_sesion'))
+
 """ prueba para el login """
 @login_manager.user_loader
 def load_user(user_id):

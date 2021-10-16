@@ -15,30 +15,41 @@ class DocumentType():
         return '<DocumentType {}>'.format(self.name)
 
 class User():
-    def __init__(self, id, name, lastName, password, documentType, is_admin=False):
+    def __init__(self, id, name, lastName, password, documentType, is_active=True, is_authenticated = False, is_admin=False):
         self.id = id
         self.name = name
         self.lastName = lastName
         self.password = generate_password_hash(password)
         self.is_admin = is_admin
+        self.is_active = is_active
         self.documentType = documentType
+        self.is_authenticated = is_authenticated
         
     def set_password(self, password):
         self.password = generate_password_hash(password)
+
+    def set_is_authenticated(self, is_authenticated):
+        self.is_authenticated = is_authenticated
         
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
     def getDocumentType(self):
         return self.documentType
+
+    def get_id(self):
+        return self.id
+    
+    def getName(self):
+        return self.name
     
     def __repr__(self):
         return '<User {}>'.format(self.name)
     
 """ ========================================================================== """
 """ Lista de usuaruios para hacer pruebas """
-users = []
 documentTypes = []
+users = []
 def get_user(name):
     documentTypes.append(DocumentType(1, 'admin'))
     documentTypes.append(DocumentType(2, 'paciente'))
