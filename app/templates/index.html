@@ -19,73 +19,112 @@
 
     <!-- Menú de navegación -->
     <header>
+        <!-- Dropdown Structure - item desplegable -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="blue-text" href="#!">Perfil</a></li>
+            <li><a class="blue-text" href="{{ url_for('autenticacion.logout') }}">Salir</a></li>
+        </ul>
+
+        <!-- Menú de navegación -->
         <nav role="navigation">
             <div class="nav-wrapper container">
-                <a id="logo-container" href="{{ url_for('inicio.inicio') }}" class="brand-logo">
-                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}" alt="HUS" class="logo">
+
+                <!-- user sin loguear -->
+                {% if current_user.is_anonymous %}
+                <a id="logo-container" class="brand-logo" href="{{ url_for('inicio.inicio') }}">
+                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
+                        alt="HUS" class="logo">
                 </a>
 
-                {% if current_user.is_authenticated %}
                 <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'Perfil' else '' }}">
-                        <a href="{{ url_for('usuario.profile_index') }}">Perfil</a>
+                    <li
+                        class="{{ 'active' if active_page == 'crearCuenta' else '' }}">
+                        <a href="{{ url_for('autenticacion.crear_cuenta') }}">Crear Cuenta</a>
                     </li>
-                </ul>
 
-                <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'Usuarios' else '' }}">
-                        <a href="{{ url_for('usuario.user_index') }}">Usuarios</a>
-                    </li>
-                </ul>
-
-                <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'Cita' else '' }}">
-                        <a href="{{ url_for('cita.appointment_index') }}">Citas</a>
-                    </li>
-                </ul>
-
-                <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'doctor' else '' }}">
-                        <a href="{{ url_for('doctor.doctor_index') }}">Medicos</a>
-                    </li>
-                </ul>
-
-                <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'Paciente' else '' }}">
-                        <a href="{{ url_for('paciente.paciente_index') }}">Pacientes</a>
-                    </li>
-                </ul>
-
-                <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'Inicio' else '' }}">
-                        <a href="{{ url_for('inicio.inicio') }}">Inicio</a>
-                    </li>
-                </ul>
-                
-                {% else %}
-                <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'iniciarSesion' else '' }}">
+                    <li
+                        class="{{ 'active' if active_page == 'iniciarSesion' else '' }}">
                         <a href="{{ url_for('autenticacion.iniciar_sesion') }}">Iniciar Sesión</a>
                     </li>
                 </ul>
+                {% else %}
+
+                <!-- Administrador -->
+                {% if current_user.get_id() == 1 %}
+                <a class="brand-logo" href="{{ url_for('administrador.administrador_index') }}">
+                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
+                        alt="HUS" class="logo">
+                </a>
 
                 <ul class="right hide-on-med-and-down">
-                    <li class="{{ 'active' if active_page == 'crearCuenta' else '' }}">
-                        <a href="{{ url_for('autenticacion.crear_cuenta') }}">Crear Cuenta</a>
+                    <li
+                        class="{{ 'active' if active_page == 'Administrador' else '' }}">
+                        <a href="{{ url_for('administrador.administrador_index') }}">Inicio</a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-trigger" data-target="dropdown1" href="">
+                            {{ current_user.name }}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
                     </li>
                 </ul>
                 {% endif %}
+
+                <!-- Médico -->
+                {% if current_user.get_id() == 2 %}
+                <a class="brand-logo" href="{{ url_for('medico.medico_index') }}">
+                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
+                        alt="HUS" class="logo">
+                </a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'Medico' else '' }}">
+                        <a href="{{ url_for('medico.medico_index') }}">Inicio</a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-trigger" data-target="dropdown1" href="">
+                            {{ current_user.name }}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+
+                <!-- Paciente -->
+                {% if current_user.get_id() == 3 %}
+                <a class="brand-logo" href="{{ url_for('paciente.paciente_index') }}">
+                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
+                        alt="HUS" class="logo">
+                </a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li
+                        class="{{ 'active' if active_page == 'Paciente' else '' }}">
+                        <a href="{{ url_for('paciente.paciente_index') }}">Inicio</a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-trigger" data-target="dropdown1" href="#">
+                            {{ current_user.name }}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+
+                {% endif %}
+
             </div>
         </nav>
-
-
     </header>
 
 
-    <div>
+    <!-- Bloque de contenido -->
     <div class="container">
         {% block contenido %}{% endblock %}
-
     </div>
 
     <!--  Scripts-->

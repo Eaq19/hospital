@@ -16,14 +16,14 @@ def create_app():
     from .paciente import paciente_blueprints
     app.register_blueprint(paciente_blueprints)
 
-    from .appointment import appointment_blueprints
-    app.register_blueprint(appointment_blueprints)
-
-    from .doctor import doctor_blueprints
-    app.register_blueprint(doctor_blueprints)
-
-    from .user import user_blueprints
-    app.register_blueprint(user_blueprints)
+    from .administrador import administrador_blueprints
+    app.register_blueprint(administrador_blueprints)
+    
+    from .medico import medico_blueprints
+    app.register_blueprint(medico_blueprints)
+    
+    from .paciente import paciente_blueprints
+    app.register_blueprint(paciente_blueprints)
 
     app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
     
