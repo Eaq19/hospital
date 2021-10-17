@@ -5,7 +5,9 @@ from flask_migrate import Migrate
 
 login_manager = LoginManager()
 db = SQLAlchemy()
+from autenticacion.models import User
 migrate = Migrate()
+
 def create_app():
     app = Flask(__name__)
 
@@ -35,4 +37,6 @@ def create_app():
     migrate.init_app(app, db)
     return app
 
-from app.autenticacion import models
+def app_context():
+        db.create_all()
+        return app
