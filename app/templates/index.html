@@ -17,28 +17,17 @@
 
 <body>
 
-    <!-- Menú de navegación -->
     <header>
-        <!-- Dropdown Structure - item desplegable -->
-        <ul id="dropdown1" class="dropdown-content">
+        <!-- Dropdown para salir - item desplegable -->
+        <ul id="dropdownSalir" class="dropdown-content">
             <li><a class="blue-text" href="#!">Perfil</a></li>
             <li><a class="blue-text" href="{{ url_for('autenticacion.logout') }}">Salir</a></li>
         </ul>
+        <!-- fin Dropdown para salir - item desplegable -->
 
         <!-- Menú de navegación -->
         <nav role="navigation">
             <div class="nav-wrapper container">
-
-
-                <!-- Cerrar Sesion -->
-                {% if current_user.is_authenticated %}
-
-                <ul class="right hide-on-med-and-down">
-                    <li>
-                        <a href="{{ url_for('autenticacion.logout') }}">Cerrar Sesión</a>
-                    </li>
-                </ul>
-                {% endif %}
 
                 <!-- user sin loguear -->
                 {% if current_user.is_anonymous %}
@@ -73,8 +62,24 @@
                         <a href="{{ url_for('administrador.administrador_index') }}">Inicio</a>
                     </li>
 
+                    <li
+                        class="{{ 'active' if active_page == 'Usuarios' else '' }}">
+                        <a href="{{ url_for('administrador.usuarios_administrador') }}">Usuarios</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'Citas' else '' }}">
+                        <a href="{{ url_for('administrador.citas_administrador') }}">Citas</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'Comentarios' else '' }}">
+                        <a
+                            href="{{ url_for('administrador.comentarios_administrador') }}">Comentarios</a>
+                    </li>
+
                     <li>
-                        <a class="dropdown-trigger" data-target="dropdown1" href="">
+                        <a class="dropdown-trigger" data-target="dropdownSalir">
                             {{ current_user.name }}
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
@@ -96,7 +101,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-trigger" data-target="dropdown1" href="">
+                        <a class="dropdown-trigger" data-target="dropdownSalir" href="">
                             {{ current_user.name }}
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
@@ -117,20 +122,30 @@
                         <a href="{{ url_for('paciente.paciente_index') }}">Inicio</a>
                     </li>
 
+                    <li
+                        class="{{ 'active' if active_page == 'CitasPaciente' else '' }}">
+                        <a href="{{ url_for('paciente.citas_paciente') }}">Citas</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'ComentariosPaciente' else '' }}">
+                        <a href="{{ url_for('paciente.comentarios_paciente') }}">Comentarios</a>
+                    </li>
+
                     <li>
-                        <a class="dropdown-trigger" data-target="dropdown1" href="#">
+                        <a class="dropdown-trigger" data-target="dropdownSalir" href="#">
                             {{ current_user.name }}
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
                 </ul>
                 {% endif %}
+
                 {% endif %}
 
             </div>
         </nav>
     </header>
-
 
     <!-- Bloque de contenido -->
     <div class="container">
@@ -141,7 +156,8 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
     <script src="{{ url_for('static', filename='js/init.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/myJsOptions.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/myJsOptions.js') }}">
+    </script>
 
 </body>
 
