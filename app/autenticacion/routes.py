@@ -40,7 +40,6 @@ def crear_cuenta():
 
 
 # iniciar_sesion
-
 @autenticacion_blueprints.route("/iniciar_sesion", methods=['GET', 'POST'])
 def iniciar_sesion():
     if current_user.is_authenticated:
@@ -74,9 +73,7 @@ def logout():
     return redirect(url_for('autenticacion.iniciar_sesion'))
 
 
-""" prueba para el login """
-
-
+# prueba para el login
 @login_manager.user_loader
 def load_user(user_id):
     for user in users:
