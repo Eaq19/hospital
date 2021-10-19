@@ -9,7 +9,6 @@ from .forms import InciarSesionForm, CrearUsuarioForm
 
 from .models import User, users
 
-
 # crear_cuenta
 @autenticacion_blueprints.route("/crear_cuenta", methods=['GET', 'POST'])
 def crear_cuenta():
@@ -72,10 +71,6 @@ def iniciar_sesion():
 def logout():
     logout_user()
     return redirect(url_for('autenticacion.iniciar_sesion'))
-
-
-""" prueba para el login """
-
 
 @login_manager.user_loader
 def load_user(user_id):
