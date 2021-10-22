@@ -100,6 +100,16 @@
                         <a href="{{ url_for('medico.medico_index') }}">Inicio</a>
                     </li>
 
+                    <li
+                        class="{{ 'active' if active_page == 'CitasMedico' else '' }}">
+                        <a href="{{ url_for('paciente.citas_medico') }}">Citas</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'ComentariosMedico' else '' }}">
+                        <a href="{{ url_for('paciente.comentarios_medico') }}">Comentarios</a>
+                    </li>
+
                     <li>
                         <a class="dropdown-trigger" data-target="dropdownSalir" href="">
                             {{ current_user.name }}
