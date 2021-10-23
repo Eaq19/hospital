@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 
 login_manager = LoginManager()
 db = SQLAlchemy()
-migrate = Migrate()
+#migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
@@ -33,10 +33,14 @@ def create_app():
     login_manager.init_app(app)
     
     db.init_app(app)
-    migrate.init_app(app, db)
+    #migrate.init_app(app, db)
       
     return app
 
 def createSchema() :
+    db.drop_all()
     db.create_all()
     db.session.commit()
+    from .autenticacion.models import loadData
+    loadData()
+    print('Se cargo la bd')
