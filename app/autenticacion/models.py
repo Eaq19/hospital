@@ -51,7 +51,6 @@ class User(db.Model):
     accessDate = db.Column(db.DateTime, nullable=False)
     type = db.Column(db.Integer, nullable=False)
     is_active = db.Column(db.Boolean, default=False)
-    isAuthenticated = db.Column(db.Boolean, default=False)
     level = db.Column(db.Integer, nullable=True)
     specialty = db.Column(db.String(128), nullable=True)
 
@@ -109,6 +108,10 @@ class User(db.Model):
         return User.query.filter_by(name=name).first()
 
     @staticmethod
+    def get_by_type(type):
+        return User.query.filter_by(type=type)
+
+    @staticmethod
     def get_all():
         return User.query.all()
 
@@ -138,45 +141,6 @@ class Patient(User) :
 
     def __repr__(self):
         return '<Patient {}>'.format(self.name)
-
-class Comment(db.Model):
-
-    __tablename__ = 'comment'
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
-    doctor = db.Column('doctor', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-    txt = db.Column(db.Text, nullable=False)
-
-    def __init__(self, date, doctor:Doctor, txt):
-        self.date = date
-        self.doctor = doctor
-        self.txt = txt
-
-    def get_id(self):
-        return self.id
-
-    def get_name(self):
-        return self.name
-
-    def save(self):
-        if not self.id:
-            db.session.add(self)
-        db.session.commit()
-    
-    @staticmethod
-    def get_by_id(id):
-        return Comment.query.get(id)
-    
-    @staticmethod
-    def get_by_name(name):
-        return Comment.query.filter_by(name=name).first()
-
-    @staticmethod
-    def get_all():
-        return Comment.query.all()
-
-    def __repr__(self):
-        return '<Comment {}>'.format(self.id)
 
 class AppointmentType(db.Model):
 
@@ -222,12 +186,11 @@ class Appointment(db.Model):
     creationDate = db.Column(db.Date, nullable=False)
     appointmentType = db.Column('appointment_type', db.Integer, db.ForeignKey('appointment_type.id', ondelete='CASCADE'), nullable=False)
 
-    def __init__(self, doctor:Doctor, date, creationDate, patient:Patient, comments:Comment, appointmentType:AppointmentType):
+    def __init__(self, doctor:Doctor, date, creationDate, patient:Patient, appointmentType:AppointmentType):
         self.doctor = doctor
         self.date = date
         self.creationDate = creationDate
         self.idPatient = patient
-        self.comments = comments
         self.appointmentType = appointmentType
     
     def get_id(self):
@@ -255,6 +218,78 @@ class Appointment(db.Model):
 
     def __repr__(self):
         return '<Appointment {}>'.format(self.id)
+
+class Comment(db.Model):
+
+    __tablename__ = 'comment'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    doctor = db.Column('doctor', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    appointment = db.Column('appointment', db.Integer, db.ForeignKey('appointment.id', ondelete='CASCADE'), nullable=False)
+    txt = db.Column(db.Text, nullable=False)
+
+    def __init__(self, date, doctor:Doctor, txt, appointment:Appointment):
+        self.date = date
+        self.doctor = doctor
+        self.txt = txt
+        self.appointment = appointment
+
+    def get_id(self):
+        return self.id
+
+    def get_name(self):
+        return self.name
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+    
+    @staticmethod
+    def get_by_id(id):
+        return Comment.query.get(id)
+    
+    @staticmethod
+    def get_by_name(name):
+        return Comment.query.filter_by(name=name).firappointmentst()
+
+    @staticmethod
+    def get_all():
+        return Comment.query.all()
+
+    def __repr__(self):
+        return '<Comment {}>'.format(self.id)
+
+
+class UserAppoinment(db.Model):
+
+    __tablename__ = 'user_appointment'
+    user = db.Column('user', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    appointment = db.Column('appointment', db.Integer, db.ForeignKey('appointment.id', ondelete='CASCADE'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, user, appointment):
+        self.user = user
+        self.appointment = appointment
+
+    def get_id(self):
+        return self.id
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+    
+    @staticmethod
+    def get_by_id(id):
+        return DocumentType.query.get(id)
+
+    @staticmethod
+    def get_all():
+        return DocumentType.query.all()
+
+    def __repr__(self):
+        return '<DocumentType {}>'.format(self.id)
 
 """ ========================================================================== """
 """ Lista de usuarios para hacer pruebas """
