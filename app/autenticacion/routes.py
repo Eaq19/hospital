@@ -7,8 +7,7 @@ from app import login_manager
 from . import autenticacion_blueprints
 from .forms import InciarSesionForm, CrearUsuarioForm
 
-from .models import User, users
-
+from .models import User
 
 # crear_cuenta
 @autenticacion_blueprints.route("/crear_cuenta", methods=['GET', 'POST'])
@@ -26,10 +25,10 @@ def crear_cuenta():
         apellido = form.apellido.data
         password = form.password.data
         # Creamos el usuario y lo guardamos
-        user = User(len(users) + 1, nombre, apellido, password)
-        users.append(user)
+        #user = User(len(users) + 1, nombre, apellido, password)
+        #users.append(user)
         # Dejamos al usuario logueado
-        login_user(user, remember=True)
+        #login_user(user, remember=True)
         next_page = request.args.get('next', None)
 
         if not next_page or url_parse(next_page).netloc != '':
@@ -72,11 +71,10 @@ def logout():
     logout_user()
     return redirect(url_for('autenticacion.iniciar_sesion'))
 
-
 # prueba para el login
 @login_manager.user_loader
 def load_user(user_id):
-    for user in users:
+    for user in User.get_all():
         if user.id == int(user_id):
             return user
     return None

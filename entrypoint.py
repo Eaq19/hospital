@@ -1,4 +1,6 @@
-from app import create_app
-from flask_login import LoginManager
+from app import createSchema, create_app
 
-app = create_app()
+app=create_app()
+app.app_context().push()
+
+createSchema()
