@@ -14,7 +14,7 @@ body {
     padding: 15px 0 !important;
 }
 
-.active a {
+.active a{
     color: #1e88e5;
 }
 
@@ -63,4 +63,25 @@ select {
 /* dropdown */
 .dropdown-content {
     top: 100% !important;
+}
+
+/* welcome */
+h3.title {
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.slider .btn {
+    margin-top: 20px;
+    color: aliceblue;
+}
+
+.slider li::before {
+    content:'';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
 }
