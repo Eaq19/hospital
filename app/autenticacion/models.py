@@ -1,5 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
+from datetime import datetime, date
 
 class DocumentType(db.Model):
 
@@ -45,10 +46,10 @@ class User(db.Model):
     password = db.Column(db.String(128), nullable=False)
     documentType = db.Column(db.Integer, db.ForeignKey('document_type.id', ondelete='CASCADE'), nullable=False)
     documentNumber = db.Column(db.String(256), unique=True, nullable=False)
-    birthDate = db.Column(db.Date, nullable=False)
+    birthDate = db.Column(db.Date, nullable=True)
     phoneNumber = db.Column(db.String(128), nullable=False)
     gender = db.Column(db.String(128), nullable=False)
-    accessDate = db.Column(db.DateTime, nullable=False)
+    accessDate = db.Column(db.Date, nullable=True)
     type = db.Column(db.Integer, nullable=False)
     is_active = db.Column(db.Boolean, default=False)
     level = db.Column(db.Integer, nullable=True)
@@ -307,9 +308,9 @@ def loadData():
 
 def loadUsers(documentTypes) :
     if not User.get_all() :
-        Admin('admin', 'admin', 'admin', documentTypes[0].get_id(), '12304566', '24/12/1990', '3129989898', 'M', '16/10/2021', 1, 1).save()
-        Doctor('medico', 'medico', 'medico', documentTypes[1].get_id(), '12304576', '24/12/1990', '3129989898', 'M', '16/10/2021', 2, "General").save()
-        Patient('paciente', 'paciente', 'paciente', documentTypes[2].get_id(), '12304586', '24/12/1990', '3129989898', 'M', '16/10/2021', 3).save()
+        Admin('admin', 'admin', 'admin', documentTypes[0].get_id(), '12304566', datetime.now(), '3129989898', 'M', datetime.now(), 1, 1).save()
+        Doctor('medico', 'medico', 'medico', documentTypes[1].get_id(), '12304576', datetime.now(), '3129989898', 'M', datetime.now(), 2, "General").save()
+        Patient('paciente', 'paciente', 'paciente', documentTypes[2].get_id(), '12304586', datetime.now(), '3129989898', 'M', datetime.now(), 3).save()
     
 
 def get_user(name):

@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(medico_blueprints)
 
     app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgrespy:postgrespy@localhost:5432/postgrespy'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     login_manager.login_view = "autenticacion.iniciar_sesion"
