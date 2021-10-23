@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+import os
 
 login_manager = LoginManager()
 db = SQLAlchemy()
@@ -26,7 +27,8 @@ def create_app():
     app.register_blueprint(medico_blueprints)
 
     app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+    PWD = os.path.abspath(os.curdir)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/hospital.db'.format(PWD)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     login_manager.login_view = "autenticacion.iniciar_sesion"
