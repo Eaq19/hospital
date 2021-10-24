@@ -2,14 +2,86 @@
 
 {% set active_page = "Usuarios" %}
 
-{% block title %}Comentarios{% endblock %}
+{% block title %}ListaUsuarios{% endblock %}
 
 {% block contenido %}
 
 <div class="input-field col s12" style="margin-top: 4rem;">
-    <h4>Vista Usuarios administrador</h4>
+    <h4>Lista de Usuarios</h4>
 </div>
 
-<p>El administrador podrá ver, editar, eliminar todas los Usuarios</p>
+<div class="row">
+    <div class="col s12 white z-depth-3">
+
+        <div style="margin-top: 20px;">
+            <div class="input-field col m6">
+                <input placeholder="Buscar Usuario" id="search" type="text" class="validate">
+                <label for="search">Buscar Usuario</label>
+            </div>
+            <div class="col m3">
+                <button class="btn blue search-button" style="margin-top: 24px; border-radius: 5px;">
+                    <i class="material-icons prefix">search</i>
+                </button>
+            </div>
+
+            <div class="col m3">
+                <button class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;">
+                    <i class="material-icons prefix">person_add</i>
+                </button>
+            </div>
+        </div>
+
+        <table id="data" class="highlight centered">
+            <thead>
+                <tr>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Tipo Documento</th>
+                    <th>Número Documento</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Sexo</th>
+                    <th>Número Teléfono</th>
+                    <th>Estado</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.documentType }}</td>
+                    <td>{{ user.documentNumber }}</td>
+                    <td>{{ user.birthDate }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.phoneNumber }}</td>
+                    <td>{{ user.is_active }}</td>
+                    <td>
+                        <a href="#modalUpdate-15" class="btn btn-floating waves-effect waves-light modal-trigger green">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a href="#modalDelete-15" class="btn btn-floating waves-effect waves-light modal-trigger red">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="col s12 white z-depth-3 center-align">
+        <ul class="pagination">
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="active"><a href="#!">1</a></li>
+            <li class="waves-effect"><a href="#!">2</a></li>
+            <li class="waves-effect"><a href="#!">3</a></li>
+            <li class="waves-effect"><a href="#!">4</a></li>
+            <li class="waves-effect"><a href="#!">5</a></li>
+            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+</div>
 
 {% endblock %}
