@@ -48,20 +48,23 @@ def iniciar_sesion():
     if form.validate_on_submit():
         user = get_user(form.usuario.data)
         if user is not None and user.check_password(form.password.data):
-            page = ''
-            if user.get_type() == 1:
+            page = None
+            if user.get_type().get_id() == 1:
                 page = 'administrador.administrador_index'
-            elif user.get_type() == 2:
+            elif user.get_type().get_id() == 2:
                 page = 'medico.medico_index'
-            elif user.get_type() == 3:
+            elif user.get_type().get_id() == 3:
                 page = 'paciente.paciente_index'
-
+            
             login_user(user, remember=True)
+            
             next_page = request.args.get('next')
             user.set_is_authenticated(True)
+            
             if not next_page or url_parse(next_page).netloc != '':
                 next_page = url_for(page)
-            return redirect(next_page)
+            print(page)
+            return redirect(next_page)            
     return render_template('iniciar_sesion.html', form=form)
 
 
