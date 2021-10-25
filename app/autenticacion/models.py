@@ -9,8 +9,10 @@ class DocumentType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, id = None):
         self.name = name
+        if id is not None :
+            self.id = id
 
     def get_id(self):
         return self.id
@@ -51,8 +53,10 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, id = None):
         self.name = name
+        if id is not None :
+            self.id = id
 
     def get_id(self):
         return self.id
@@ -147,6 +151,76 @@ class User(db.Model):
     def get_name(self):
         return self.name
 
+    def get_lastName(self) :
+        return self.lastName
+
+    def get_password(self) :
+        return self.password
+
+    def get_documentNumber(self) :
+        return self.documentNumber
+
+    def get_birthDate(self) :
+        return self.birthDate
+
+    def get_phoneNumber(self) :
+        return self.phoneNumber
+
+    def get_gender(self) :
+        return self.gender
+
+    def get_accessDate(self) :
+        return self.accessDate
+
+    def get_is_active(self) :
+        return self.is_active
+        
+    def get_level(self) :
+        return self.level
+
+    def get_specialty(self) :
+        return self.specialty
+
+    def set_documentTypeId(self, documentTypeId) :
+        self.documentTypeId = documentTypeId
+
+    def set_typeId(self, typeId) :
+        self.typeId = typeId
+
+    def set_id(self, id):
+         self.id = id
+
+    def set_type(self, type):
+         self.type = type
+
+    def set_name(self, name):
+         self.name = name
+
+    def set_lastName(self, lastName) :
+         self.lastName = lastName
+
+    def set_password(self, password) :
+         self.password = password
+
+    def set_documentNumber(self, documentNumber) :
+         self.documentNumber = documentNumber
+
+    def set_birthDate(self, birthDate) :
+         self.birthDate = birthDate
+
+    def set_phoneNumber(self, phoneNumber) :
+         self.phoneNumber = phoneNumber
+
+    def set_gender(self, gender) :
+         self.gender = gender
+        
+    def set_level(self, level) :
+         self.level = level
+
+    def set_specialty(self, specialty) :
+         self.specialty = specialty
+    
+
     def save(self):
         if not self.id:
             db.session.add(self)
@@ -156,8 +230,9 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
+        self = User.query.filter_by(id=self.id).first()
 
     @staticmethod
     def get_by_id(id):

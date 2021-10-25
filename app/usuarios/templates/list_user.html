@@ -25,9 +25,9 @@
             </div>
 
             <div class="col m3">
-                <button class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;">
-                    <i class="material-icons prefix">person_add</i>
-                </button>
+                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;" href="{{ url_for('user.create') }}">
+                    <i class="material-icons prefix"  >person_add</i>
+                </a>
             </div>
         </div>
 
@@ -65,12 +65,14 @@
                     </td>
                     <td>{{ user.type.get_name() }}</td>
                     <td>
-                        <a href="#modalUpdate-15" class="btn btn-floating waves-effect waves-light modal-trigger green">
+                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('user.edit', id=user.id) }}">
                             <i class="material-icons">edit</i>
                         </a>
-                        <a href="#modalDelete-15" class="btn btn-floating waves-effect waves-light modal-trigger red">
-                            <i class="material-icons">delete</i>
-                        </a>
+                        {% if current_user.get_id() != user.id %}
+                            <a href="{{ url_for('user.delete', id=user.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -79,17 +81,6 @@
 
     </div>
 
-    <div class="col s12 white z-depth-3 center-align">
-        <ul class="pagination">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!">2</a></li>
-            <li class="waves-effect"><a href="#!">3</a></li>
-            <li class="waves-effect"><a href="#!">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-        </ul>
-    </div>
 </div>
 
 {% endblock %}

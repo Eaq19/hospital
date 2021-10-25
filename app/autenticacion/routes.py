@@ -12,8 +12,6 @@ from .models import User
 # crear_cuenta
 @autenticacion_blueprints.route("/crear_cuenta", methods=['GET', 'POST'])
 def crear_cuenta():
-    """ form = CrearUsuarioForm()
-    return render_template('crear_cuenta.html', form=form) """
 
     if current_user.is_authenticated:
         return redirect(url_for('paciente.paciente_index'))
