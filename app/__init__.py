@@ -29,6 +29,15 @@ def create_app():
     from .usuarios import user_blueprints
     app.register_blueprint(user_blueprints)
 
+    from .citas import appointment_blueprints
+    app.register_blueprint(appointment_blueprints)
+
+    from .rol import rol_blueprints
+    app.register_blueprint(rol_blueprints)
+
+    from .tipoDocumento import documentType_blueprints
+    app.register_blueprint(documentType_blueprints)
+
     app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
     PWD = os.path.abspath(os.curdir)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/hospital.db'.format(PWD)

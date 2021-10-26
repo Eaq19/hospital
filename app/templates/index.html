@@ -69,7 +69,17 @@
 
                     <li
                         class="{{ 'active' if active_page == 'Citas' else '' }}">
-                        <a href="{{ url_for('administrador.citas_administrador') }}">Citas</a>
+                        <a href="{{ url_for('appointment.list') }}">Citas</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'Rol' else '' }}">
+                        <a href="{{ url_for('rol.list') }}">Roles</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'TipoDocumento' else '' }}">
+                        <a href="{{ url_for('documentType.list') }}">Tipo de documentos</a>
                     </li>
 
                     <li
@@ -102,7 +112,7 @@
 
                     <li
                         class="{{ 'active' if active_page == 'CitasMedico' else '' }}">
-                        <a href="{{ url_for('medico.citas_medico') }}">Citas</a>
+                        <a href="{{ url_for('appointment.list') }}">Citas</a>
                     </li>
 
                     <li
@@ -134,7 +144,7 @@
 
                     <li
                         class="{{ 'active' if active_page == 'CitasPaciente' else '' }}">
-                        <a href="{{ url_for('paciente.citas_paciente') }}">Citas</a>
+                        <a href="{{ url_for('appointment.list') }}">Citas</a>
                     </li>
 
                     <li

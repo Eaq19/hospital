@@ -24,9 +24,9 @@ def delete(id):
     post:User = User.get_by_id(id)
     if post is not None :
         post.delete()
+    else :
+        return redirect(url_for('user.list'))
     page = request.args.get('page', 1, type=int)
-    
-    users = User.query.paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
     return redirect(url_for('user.list'))
 
 # lista de citas
@@ -35,57 +35,66 @@ def delete(id):
 def edit(id):
     post:User = User.get_by_id(id)
     if post is not None :
-        form = CrearUsuarioForm()
+        form = CrearUsuarioForm(formdata=request.form, obj=post)
         types = DocumentType.get_all()
         types.insert(0, DocumentType("Tipo de documento", 0))
         listTypes=[(i.get_id(), i.get_name()) for i in types]
         roles = Role.get_all()
-        roles.insert(0, Role("Tipo de documento", 0))
+        roles.insert(0, Role("Tipo de rol", 0))
         listRoles=[(i.get_id(), i.get_name()) for i in roles]
-        form.tipo_documento.choices = listTypes
-        form.tipoUsuario.choices = listRoles
-        form.nombres.data = post.get_name()
-        form.apellidos.data = post.get_lastName()
-        form.tipo_documento.data = post.get_documentType().get_id()
-        form.num_documento.data = post.get_documentNumber()
-        form.num_telefono.data = post.get_phoneNumber()
-        form.fecha_nacimiento.data = post.get_birthDate()
-        form.sexo.data = post.get_gender()
-        form.tipoUsuario.data = post.get_type().get_id()
-        form.estado.data = post.get_is_active()
+        form.documentTypeId.choices = listTypes
+        form.typeId.choices = listRoles
         if request.method == 'POST':
             if form.validate_on_submit():
+                post.set_documentTypeId(form.documentTypeId.data)
+                post.set_typeId(form.typeId.data)
+                post.set_name(form.name.data)
+                post.set_lastName(form.lastName.data)
+                post.set_password(form.password.data)
+                post.set_documentNumber(form.documentNumber.data)
+                post.set_phoneNumber(form.phoneNumber.data)
+                post.set_birthDate(form.birthDate.data)
+                post.set_gender(form.gender.data)
+                if form.is_active.data == 1 : 
+                    post.set_is_active(True)
+                else :
+                    post.set_is_active(False)
                 post.update()
                 next = request.args.get('next', None)
                 if next:
                     return redirect(next)
                 return redirect(url_for('user.list'))
-
-    return render_template('edit_user.html',form=form, user=post)
+    else :
+        return redirect(url_for('user.list'))
+    return render_template('edit_user.html',form=form)
 
 
 # lista de comentarios
 @user_blueprints.route("/usuario", methods=['GET', 'POST'])
 #@login_required
 def create():
-    form = CrearUsuarioForm()
-    listTypes=[(i.get_id(), i.get_name()) for i in DocumentType.get_all()]
-    listRoles=[(i.get_id(), i.get_name()) for i in Role.get_all()]
-    form.tipo_documento.choices = listTypes
-    form.tipoUsuario.choices = listRoles
+    form = CrearUsuarioForm(formdata=request.form)
+    types = DocumentType.get_all()
+    types.insert(0, DocumentType("Tipo de documento", 0))
+    listTypes=[(i.get_id(), i.get_name()) for i in types]
+    roles = Role.get_all()
+    roles.insert(0, Role("Tipo de rol", 0))
+    listRoles=[(i.get_id(), i.get_name()) for i in roles]
+    form.documentTypeId.choices = listTypes
+    form.typeId.choices = listRoles
     if form.validate_on_submit():
-        if form.tipoUsuario.data == "1" :
-            user = Admin(form.nombres.data, form.apellidos.data, form.password.data, form.tipo_documento.data, form.tipo_documento.data, form.fecha_nacimiento.data, form.num_telefono.data, form.sexo.data, datetime.now(), 1)
+        if form.typeId.data == "1" :
+            user = Admin(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now(), 1)
             user.save()
-        elif form.tipoUsuario.data == "2" :
-            user = Doctor(form.nombres.data, form.apellidos.data, form.password.data, form.tipo_documento.data, form.tipo_documento.data, form.fecha_nacimiento.data, form.num_telefono.data, form.sexo.data, datetime.now(), "General")
+        elif form.typeId.data == "2" :
+            user = Doctor(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now(), "General")
             user.save()
-        elif form.tipoUsuario.data == "3" :
-            user = Patient(form.nombres.data, form.apellidos.data, form.password.data, form.tipo_documento.data, form.tipo_documento.data, form.fecha_nacimiento.data, form.num_telefono.data, form.sexo.data, datetime.now())
+        elif form.typeId.data == "3" :
+            user = Patient(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now())
             user.save()
         next = request.args.get('next', None)
         if next:
             return redirect(next)
         return redirect(url_for('user.list'))
     
-    return render_template("create_user.html", form=form, documentTypes= DocumentType.get_all(), roles = Role.get_all())
+    return render_template("create_user.html", form=form)

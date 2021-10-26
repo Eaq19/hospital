@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 from datetime import datetime
-from sqlalchemy.orm import relationship
+from sqlalchemyy.orm import relationship
 
 class DocumentType(db.Model):
 
@@ -20,6 +20,9 @@ class DocumentType(db.Model):
     def get_name(self):
         return self.name
 
+    def set_name(self, name):
+        self.name = name
+
     def save(self):
         if not self.id:
             db.session.add(self)
@@ -29,8 +32,9 @@ class DocumentType(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
+        self = DocumentType.query.filter_by(id=self.id).first()
     
     @staticmethod
     def get_by_id(id):
@@ -64,6 +68,9 @@ class Role(db.Model):
     def get_name(self):
         return self.name
 
+    def set_name(self, name):
+        self.name = name
+
     def save(self):
         if not self.id:
             db.session.add(self)
@@ -73,8 +80,9 @@ class Role(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
+        self = Role.query.filter_by(id=self.id).first()
     
     @staticmethod
     def get_by_id(id):
@@ -101,7 +109,7 @@ class User(db.Model):
     documentTypeId = db.Column(db.Integer, db.ForeignKey('document_type.id', ondelete='CASCADE'), nullable=False)
     documentNumber = db.Column(db.String(256), unique=True, nullable=False)
     birthDate = db.Column(db.Date, nullable=True)
-    phoneNumber = db.Column(db.String(128), nullable=False)
+    phoneNumber = db.Column(db.String(128), nullable=True)
     gender = db.Column(db.String(128), nullable=False)
     accessDate = db.Column(db.Date, nullable=True)
     typeId = db.Column('role', db.Integer, db.ForeignKey('role.id', ondelete='CASCADE'), nullable=False)
@@ -199,9 +207,6 @@ class User(db.Model):
     def set_lastName(self, lastName) :
          self.lastName = lastName
 
-    def set_password(self, password) :
-         self.password = password
-
     def set_documentNumber(self, documentNumber) :
          self.documentNumber = documentNumber
 
@@ -219,8 +224,10 @@ class User(db.Model):
 
     def set_specialty(self, specialty) :
          self.specialty = specialty
-    
 
+    def set_is_active(self, is_active) :
+        self.is_active = is_active
+    
     def save(self):
         if not self.id:
             db.session.add(self)
@@ -243,8 +250,8 @@ class User(db.Model):
         return User.query.filter_by(name=name).first()
 
     @staticmethod
-    def get_by_type(type):
-        return User.query.filter_by(type=type)
+    def get_by_type(typeId):
+        return User.query.filter_by(typeId=typeId).all()
 
     @staticmethod
     def get_all():
@@ -252,6 +259,17 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.name)
+
+class UserSimple(User) :
+
+    def __init__(self, name, lastName, id = None):
+        self.name = name
+        self.lastName = lastName
+        if id is not None :
+            self.id = id
+    
+    def __repr__(self):
+        return '<UserSimple {}>'.format(self.name)
 
 class Admin(User) :
 
@@ -283,8 +301,10 @@ class AppointmentType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, id = None):
         self.name = name
+        if id is not None :
+            self.id = id
 
     def get_id(self):
         return self.id
@@ -301,8 +321,9 @@ class AppointmentType(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
+        self = AppointmentType.query.filter_by(id=self.id).first()
     
     @staticmethod
     def get_by_id(id):
@@ -343,8 +364,17 @@ class Appointment(db.Model):
     def get_id(self):
         return self.id
 
-    def get_name(self):
-        return self.name
+    def set_date(self, date):
+        self.date = date
+
+    def set_doctorId(self, doctorId):
+        self.doctorId = doctorId
+    
+    def set_patientId(self, patientId):
+        self.patientId = patientId
+
+    def set_appointmentTypeId(self, appointmentTypeId):
+        self.appointmentTypeId = appointmentTypeId
 
     def save(self):
         if not self.id:
@@ -355,8 +385,9 @@ class Appointment(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
+        self = Appointment.query.filter_by(id=self.id).first()
     
     @staticmethod
     def get_by_id(id):
@@ -406,8 +437,9 @@ class Comment(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
+        self = Comment.query.filter_by(id=self.id).first()
 
     @staticmethod
     def get_by_id(id):
@@ -426,6 +458,14 @@ class Comment(db.Model):
 
 """ ========================================================================== """
 """ Lista de usuarios para hacer pruebas """
+
+def loadAppointmentType() :
+    list = AppointmentType.get_all()
+    if not list :
+        AppointmentType('General').save()
+        AppointmentType('Especialista').save()
+        AppointmentType('Pediatra').save()
+
 def loadDocumentType() :
     documentTypes = DocumentType.get_all()
     if not documentTypes :
@@ -445,6 +485,7 @@ def loadRole():
     return roles
 
 def loadData():
+    loadAppointmentType()
     loadUsers(loadDocumentType(), loadRole())
 
 def loadUsers(documentTypes, roles) :
