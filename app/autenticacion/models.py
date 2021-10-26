@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 from datetime import datetime
-from sqlalchemyy.orm import relationship
+from sqlalchemy.orm import relationship
 
 class DocumentType(db.Model):
 
