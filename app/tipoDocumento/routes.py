@@ -25,7 +25,7 @@ def list():
 def delete(id):
     post:DocumentType = DocumentType.get_by_id(id)
     if post is not None :
-        post.deletRolese()
+        post.delete()
     else :
         return redirect(url_for('documentType.list'))
     page = request.args.get('page', 1, type=int)
