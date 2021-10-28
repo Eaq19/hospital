@@ -1,13 +1,13 @@
 {% extends "index.html" %}
 
-{% set active_page = "TipoDocumento" %}
+{% set active_page = "TipoCita" %}
 
-{% block title %}Lista Tipo Documentos{% endblock %}
+{% block title %}Lista Tipo Citas{% endblock %}
 
 {% block contenido %}
 
 <div class="input-field col s12" style="margin-top: 4rem;">
-    <h4>Lista de Tipo Documentos</h4>
+    <h4>Lista de Tipo Citas</h4>
 </div>
 
 <div class="row">
@@ -15,8 +15,8 @@
 
         <div style="margin-top: 20px;">
             <div class="input-field col m6">
-                <input placeholder="Buscar Tipo Documento" id="search" type="text" class="validate">
-                <label for="search">Buscar Tipo Documento</label>
+                <input placeholder="Buscar Cita" id="search" type="text" class="validate">
+                <label for="search">Buscar Tipo Cita</label>
             </div>
             <div class="col m3">
                 <button class="btn blue search-button" style="margin-top: 24px; border-radius: 5px;">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="col m3">
-                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;" href="{{ url_for('documentType.create') }}">
+                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;" href="{{ url_for('appointmentType.create') }}">
                     <i class="material-icons prefix"  >add</i>
                 </a>
             </div>
@@ -38,14 +38,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for obj in documentTypes %}
+                {% for obj in appointmentTypes %}
                 <tr>
                     <td>{{ obj.name }}</td>
                     <td>
-                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('documentType.edit', id=obj.id) }}">
+                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('appointmentType.edit', id=obj.id) }}">
                             <i class="material-icons">edit</i>
                         </a>
-                        <a href="{{ url_for('documentType.delete', id=obj.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
+                        <a href="{{ url_for('appointmentType.delete', id=obj.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
                             <i class="material-icons">delete</i>
                         </a>
                     </td>

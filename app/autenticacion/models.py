@@ -144,6 +144,9 @@ class User(db.Model):
     def get_is_authenticated(self):
         return self.is_authenticated
 
+    def is_authenticated(self):
+        return self.is_authenticated
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
@@ -312,6 +315,9 @@ class AppointmentType(db.Model):
     def get_name(self):
         return self.name
 
+    def set_name(self, name):
+        self.name = name
+
     def save(self):
         if not self.id:
             db.session.add(self)
@@ -396,6 +402,10 @@ class Appointment(db.Model):
     @staticmethod
     def get_by_name(name):
         return Appointment.query.filter_by(name=name).first()
+    
+    @staticmethod
+    def get_by_doctor(id):
+        return Appointment.query.filter_by(doctorId=id)
 
     @staticmethod
     def get_all():
@@ -425,8 +435,35 @@ class Comment(db.Model):
     def get_id(self):
         return self.id
 
-    def get_name(self):
-        return self.name
+    def get_date(self):
+        return self.date
+    
+    def get_doctor(self):
+        return self.doctor
+
+    def get_doctorId(self):
+        return self.doctorId
+
+    def get_appointmentId(self):
+        return self.appointmentId
+
+    def get_appointment(self):
+        return self.appointment
+
+    def get_txt(self):
+        return self.txt
+
+    def set_date(self, date):
+        self.date = date
+    
+    def set_doctorId(self, doctorId):
+        self.doctorId = doctorId
+
+    def set_appointmentId(self, appointmentId):
+        self.appointmentId = appointmentId
+
+    def set_txt(self, txt):
+        self.txt = txt
 
     def save(self):
         if not self.id:

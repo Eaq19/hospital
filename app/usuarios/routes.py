@@ -10,7 +10,7 @@ from datetime import datetime
 ROWS_PER_PAGE = 5
 
 @user_blueprints.route("/usuarios", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def list():
     page = request.args.get('page', 1, type=int)
     
@@ -19,7 +19,7 @@ def list():
     return render_template('list_user.html', users=users.items)
 
 @user_blueprints.route("/usuarios/delete/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def delete(id):
     post:User = User.get_by_id(id)
     if post is not None :
@@ -31,7 +31,7 @@ def delete(id):
 
 # lista de citas
 @user_blueprints.route("/usuarios/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit(id):
     post:User = User.get_by_id(id)
     if post is not None :
@@ -71,7 +71,7 @@ def edit(id):
 
 # lista de comentarios
 @user_blueprints.route("/usuario", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def create():
     form = CrearUsuarioForm(formdata=request.form)
     types = DocumentType.get_all()

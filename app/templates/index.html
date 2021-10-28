@@ -50,7 +50,7 @@
                 {% else %}
 
                 <!-- Administrador -->
-                {% if current_user.get_id() == 1 %}
+                {% if current_user.get_type().get_id() == 1 %}
                 <a class="brand-logo" href="{{ url_for('administrador.administrador_index') }}">
                     <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
                         alt="HUS" class="logo">
@@ -83,9 +83,8 @@
                     </li>
 
                     <li
-                        class="{{ 'active' if active_page == 'Comentarios' else '' }}">
-                        <a
-                            href="{{ url_for('administrador.comentarios_administrador') }}">Comentarios</a>
+                        class="{{ 'active' if active_page == 'TipoCita' else '' }}">
+                        <a href="{{ url_for('appointmentType.list') }}">Tipo de citas</a>
                     </li>
 
                     <li>
@@ -97,31 +96,52 @@
                 </ul>
                 {% endif %}
 
-                <!-- Médico -->
-                {% if current_user.get_id() == 2 %}
-                <a class="brand-logo" href="{{ url_for('medico.medico_index') }}">
+                <!-- Doctor -->
+                {% if current_user.get_type().get_id() == 2 %}
+                <a class="brand-logo" href="{{ url_for('administrador.doctor_index') }}">
                     <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
                         alt="HUS" class="logo">
                 </a>
 
                 <ul class="right hide-on-med-and-down">
                     <li
-                        class="{{ 'active' if active_page == 'Medico' else '' }}">
-                        <a href="{{ url_for('medico.medico_index') }}">Inicio</a>
+                        class="{{ 'active' if active_page == 'Doctor' else '' }}">
+                        <a href="{{ url_for('administrador.doctor_index') }}">Inicio</a>
                     </li>
 
                     <li
-                        class="{{ 'active' if active_page == 'CitasMedico' else '' }}">
+                        class="{{ 'active' if active_page == 'Citas' else '' }}">
                         <a href="{{ url_for('appointment.list') }}">Citas</a>
                     </li>
 
+                    <li>
+                        <a class="dropdown-trigger" data-target="dropdownSalir">
+                            {{ current_user.name }}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+                <!-- Patient -->
+                {% if current_user.get_type().get_id() == 3 %}
+                <a class="brand-logo" href="{{ url_for('administrador.patient_index') }}">
+                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
+                        alt="HUS" class="logo">
+                </a>
+
+                <ul class="right hide-on-med-and-down">
                     <li
-                        class="{{ 'active' if active_page == 'ComentariosMedico' else '' }}">
-                        <a href="{{ url_for('medico.comentarios_medico') }}">Comentarios</a>
+                        class="{{ 'active' if active_page == 'Patient' else '' }}">
+                        <a href="{{ url_for('administrador.patient_index') }}">Inicio</a>
+                    </li>
+
+                    <li
+                        class="{{ 'active' if active_page == 'Citas' else '' }}">
+                        <a href="{{ url_for('appointment.list') }}">Citas</a>
                     </li>
 
                     <li>
-                        <a class="dropdown-trigger" data-target="dropdownSalir" href="">
+                        <a class="dropdown-trigger" data-target="dropdownSalir">
                             {{ current_user.name }}
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
@@ -129,37 +149,6 @@
                 </ul>
                 {% endif %}
 
-                <!-- Paciente -->
-                {% if current_user.get_id() == 3 %}
-                <a class="brand-logo" href="{{ url_for('paciente.paciente_index') }}">
-                    <img src="{{ url_for('static', filename='images/logo-HUS.png') }}"
-                        alt="HUS" class="logo">
-                </a>
-
-                <ul class="right hide-on-med-and-down">
-                    <li
-                        class="{{ 'active' if active_page == 'Paciente' else '' }}">
-                        <a href="{{ url_for('paciente.paciente_index') }}">Inicio</a>
-                    </li>
-
-                    <li
-                        class="{{ 'active' if active_page == 'CitasPaciente' else '' }}">
-                        <a href="{{ url_for('appointment.list') }}">Citas</a>
-                    </li>
-
-                    <li
-                        class="{{ 'active' if active_page == 'ComentariosPaciente' else '' }}">
-                        <a href="{{ url_for('paciente.comentarios_paciente') }}">Comentarios</a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-trigger" data-target="dropdownSalir" href="#">
-                            {{ current_user.name }}
-                            <i class="material-icons right">arrow_drop_down</i>
-                        </a>
-                    </li>
-                </ul>
-                {% endif %}
 
                 {% endif %}
 

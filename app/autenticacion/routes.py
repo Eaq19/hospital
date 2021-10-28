@@ -44,7 +44,7 @@ def iniciar_sesion():
 
     form = InciarSesionForm()
     if form.validate_on_submit():
-        user = get_user(form.usuario.data)
+        user:User = get_user(form.usuario.data)
         if user is not None and user.check_password(form.password.data):
             page = None
             if user.get_type().get_id() == 1:
@@ -75,7 +75,5 @@ def logout():
 # prueba para el login
 @login_manager.user_loader
 def load_user(user_id):
-    for user in User.get_all():
-        if user.id == int(user_id):
-            return user
-    return None
+    user = User.get_by_id(user_id)
+    return user

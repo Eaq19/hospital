@@ -38,6 +38,12 @@ def create_app():
     from .tipoDocumento import documentType_blueprints
     app.register_blueprint(documentType_blueprints)
 
+    from .tipoCita import appointmentType_blueprints
+    app.register_blueprint(appointmentType_blueprints)
+
+    from .Comentario import comment_blueprints
+    app.register_blueprint(comment_blueprints)
+
     app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
     PWD = os.path.abspath(os.curdir)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/hospital.db'.format(PWD)
@@ -52,7 +58,7 @@ def create_app():
     return app
 
 def createSchema() :
-    db.drop_all()
+    #db.drop_all()
     db.create_all()
     db.session.commit()
     from .autenticacion.models import loadData

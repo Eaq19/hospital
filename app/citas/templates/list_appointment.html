@@ -15,7 +15,7 @@
 
         <div style="margin-top: 20px;">
             <div class="input-field col m6">
-                <input placeholder="Buscar Usuario" id="search" type="text" class="validate">
+                <input placeholder="Buscar Cita" id="search" type="text" class="validate">
                 <label for="search">Buscar Cita</label>
             </div>
             <div class="col m3">
@@ -53,6 +53,9 @@
                     <td>
                         <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('appointment.edit', id=obj.id) }}">
                             <i class="material-icons">edit</i>
+                        </a>
+                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('comment.list', id=obj.id) }}">
+                            <i class="material-icons">edit Person</i>
                         </a>
                         <a href="{{ url_for('appointment.delete', id=obj.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
                             <i class="material-icons">delete</i>

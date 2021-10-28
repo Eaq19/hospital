@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from app.autenticacion.models import Appointment, AppointmentType, DocumentType, Appointment, UserSimple, User
 from . import appointment_blueprints
@@ -10,20 +10,19 @@ from datetime import datetime
 ROWS_PER_PAGE = 5
 
 @appointment_blueprints.route("/citas", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def list():
     page = request.args.get('page', 1, type=int)
-    
-    appointments = Appointment.query.paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-
+    if current_user.get_type().get_id() == 1 :
+        appointments = Appointment.get_all()
+    else :
+        appointments = Appointment.get_by_doctor(current_user.get_id())
     if not appointments :
         appointments = []
-    else :
-        appointments = appointments.items
     return render_template('list_appointment.html', appointments=appointments)
 
 @appointment_blueprints.route("/citas/delete/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def delete(id):
     post:Appointment = Appointment.get_by_id(id)
     if post is not None :
@@ -35,7 +34,7 @@ def delete(id):
 
 # lista de citas
 @appointment_blueprints.route("/citas/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit(id):
     post:Appointment = Appointment.get_by_id(id)
     if post is not None :
@@ -71,7 +70,7 @@ def edit(id):
 
 # lista de comentarios
 @appointment_blueprints.route("/cita", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def create():
     form = CrearCitaForm(request.form)
     doctors = UserSimple.get_by_type(2)

@@ -9,7 +9,7 @@ from .forms import CrearRolForm
 ROWS_PER_PAGE = 5
 
 @rol_blueprints.route("/roles", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def list():
     page = request.args.get('page', 1, type=int)
     
@@ -22,7 +22,7 @@ def list():
     return render_template('list_rol.html', rols=rols)
 
 @rol_blueprints.route("/roles/delete/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def delete(id):
     post:Role = Role.get_by_id(id)
     if post is not None :
@@ -34,7 +34,7 @@ def delete(id):
 
 # lista de roles
 @rol_blueprints.route("/roles/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit(id):
     post:Role = Role.get_by_id(id)
     if post is not None :
@@ -55,7 +55,7 @@ def edit(id):
 
 # lista de comentarios
 @rol_blueprints.route("/rol", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def create():
     form = CrearRolForm(request.form)
     if form.validate_on_submit():

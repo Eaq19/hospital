@@ -1,13 +1,13 @@
 {% extends "index.html" %}
 
-{% set active_page = "TipoDocumento" %}
+{% set active_page = "Comentario" %}
 
-{% block title %}Lista Tipo Documentos{% endblock %}
+{% block title %}Lista Comentarios{% endblock %}
 
 {% block contenido %}
 
 <div class="input-field col s12" style="margin-top: 4rem;">
-    <h4>Lista de Tipo Documentos</h4>
+    <h4>Lista de Comentarios para la cita #{{ appointment.get_id() }}</h4>
 </div>
 
 <div class="row">
@@ -15,8 +15,8 @@
 
         <div style="margin-top: 20px;">
             <div class="input-field col m6">
-                <input placeholder="Buscar Tipo Documento" id="search" type="text" class="validate">
-                <label for="search">Buscar Tipo Documento</label>
+                <input placeholder="Buscar Comentario" id="search" type="text" class="validate">
+                <label for="search">Buscar Comentario</label>
             </div>
             <div class="col m3">
                 <button class="btn blue search-button" style="margin-top: 24px; border-radius: 5px;">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="col m3">
-                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;" href="{{ url_for('documentType.create') }}">
+                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;" href="{{ url_for('comment.create', id=appointment.get_id()) }}">
                     <i class="material-icons prefix"  >add</i>
                 </a>
             </div>
@@ -34,18 +34,23 @@
         <table id="data" class="highlight centered">
             <thead>
                 <tr>
-                    <th>Nombre</th>
+                    <th>Fecha de creación</th>
+                    <th>Doctor</th>
+                    <th>Texto</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for obj in documentTypes %}
+                {% for obj in comments %}
                 <tr>
-                    <td>{{ obj.name }}</td>
+                    <td>{{ obj.get_date() }}</td>
+                    <td>{{ obj.get_doctor().get_name() }}</td>
+                    <td>{{ obj.get_txt() }}</td>
                     <td>
-                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('documentType.edit', id=obj.id) }}">
+                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('comment.edit', idComment=obj.id) }}">
                             <i class="material-icons">edit</i>
                         </a>
-                        <a href="{{ url_for('documentType.delete', id=obj.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
+                        <a href="{{ url_for('comment.delete', id=obj.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
                             <i class="material-icons">delete</i>
                         </a>
                     </td>

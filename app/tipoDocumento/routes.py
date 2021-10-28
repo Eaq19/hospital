@@ -8,7 +8,7 @@ from .forms import CrearDocumentTypeForm
 ROWS_PER_PAGE = 5
 
 @documentType_blueprints.route("/documentTypes", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def list():
     page = request.args.get('page', 1, type=int)
     
@@ -21,7 +21,7 @@ def list():
     return render_template('list_documentType.html', documentTypes=documentTypes)
 
 @documentType_blueprints.route("/documentTypes/delete/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def delete(id):
     post:DocumentType = DocumentType.get_by_id(id)
     if post is not None :
@@ -33,7 +33,7 @@ def delete(id):
 
 # lista de DocumentTypes
 @documentType_blueprints.route("/documentTypes/<int:id>", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit(id):
     post:DocumentType = DocumentType.get_by_id(id)
     if post is not None :
@@ -54,7 +54,7 @@ def edit(id):
 
 # lista de comentarios
 @documentType_blueprints.route("/documentType", methods=['GET', 'POST'])
-#@login_required
+@login_required
 def create():
     form = CrearDocumentTypeForm(request.form)
     if form.validate_on_submit():
