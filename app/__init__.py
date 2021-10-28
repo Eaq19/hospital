@@ -16,15 +16,9 @@ def create_app():
 
     from .autenticacion import autenticacion_blueprints
     app.register_blueprint(autenticacion_blueprints)
-    
-    from .paciente import paciente_blueprints
-    app.register_blueprint(paciente_blueprints)
 
     from .administrador import administrador_blueprints
     app.register_blueprint(administrador_blueprints)
-    
-    from .medico import medico_blueprints
-    app.register_blueprint(medico_blueprints)
 
     from .usuarios import user_blueprints
     app.register_blueprint(user_blueprints)

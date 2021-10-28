@@ -50,9 +50,9 @@ def iniciar_sesion():
             if user.get_type().get_id() == 1:
                 page = 'administrador.administrador_index'
             elif user.get_type().get_id() == 2:
-                page = 'medico.medico_index'
+                page = 'administrador.doctor_index'
             elif user.get_type().get_id() == 3:
-                page = 'paciente.paciente_index'
+                page = 'administrador.patient_index'
             
             login_user(user, remember=True)
             

@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from app.autenticacion.models import DocumentType, User, Admin, Patient, Doctor, Role
 from . import user_blueprints
@@ -68,6 +68,44 @@ def edit(id):
         return redirect(url_for('user.list'))
     return render_template('edit_user.html',form=form)
 
+@user_blueprints.route("/profile", methods=['GET', 'POST'])
+@login_required
+def profile():
+    id = current_user.get_id()
+    post:User = User.get_by_id(id)
+    if post is not None :
+        form = CrearUsuarioForm(formdata=request.form, obj=post)
+        types = DocumentType.get_all()
+        types.insert(0, DocumentType("Tipo de documento", 0))
+        listTypes=[(i.get_id(), i.get_name()) for i in types]
+        roles = Role.get_all()
+        roles.insert(0, Role("Tipo de rol", 0))
+        listRoles=[(i.get_id(), i.get_name()) for i in roles]
+        form.documentTypeId.choices = listTypes
+        form.typeId.choices = listRoles
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                post.set_documentTypeId(form.documentTypeId.data)
+                post.set_typeId(form.typeId.data)
+                post.set_name(form.name.data)
+                post.set_lastName(form.lastName.data)
+                post.set_password(form.password.data)
+                post.set_documentNumber(form.documentNumber.data)
+                post.set_phoneNumber(form.phoneNumber.data)
+                post.set_birthDate(form.birthDate.data)
+                post.set_gender(form.gender.data)
+                if form.is_active.data == 1 : 
+                    post.set_is_active(True)
+                else :
+                    post.set_is_active(False)
+                post.update()
+                next = request.args.get('next', None)
+                if next:
+                    return redirect(next)
+                return redirect(url_for('user.list'))
+    else :
+        return redirect(url_for('user.list'))
+    return render_template('edit_user.html',form=form)
 
 # lista de comentarios
 @user_blueprints.route("/usuario", methods=['GET', 'POST'])

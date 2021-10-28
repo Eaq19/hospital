@@ -20,7 +20,7 @@
     <header>
         <!-- Dropdown para salir - item desplegable -->
         <ul id="dropdownSalir" class="dropdown-content">
-            <li><a class="blue-text" href="#!">Perfil</a></li>
+            <li><a class="blue-text" href="{{ url_for('user.profile') }}">Perfil</a></li>
             <li><a class="blue-text" href="{{ url_for('autenticacion.logout') }}">Salir</a></li>
         </ul>
         <!-- fin Dropdown para salir - item desplegable -->
