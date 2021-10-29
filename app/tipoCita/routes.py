@@ -5,7 +5,7 @@ from app.autenticacion.models import AppointmentType
 from . import appointmentType_blueprints
 from .forms import CrearAppointmentTypeForm
 # lista de AppointmentTypes
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 15
 
 @appointmentType_blueprints.route("/appointmentTypes", methods=['GET', 'POST'])
 @login_required

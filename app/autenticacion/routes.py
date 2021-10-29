@@ -2,37 +2,41 @@ from .models import get_user
 from flask import (render_template, redirect, url_for, request, current_app)
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
+from datetime import datetime
 
 from app import login_manager
 from . import autenticacion_blueprints
 from .forms import InciarSesionForm, CrearUsuarioForm
 
-from .models import User
 
+from app.autenticacion.models import DocumentType, User, Admin, Patient, Doctor, Role
 # crear_cuenta
 @autenticacion_blueprints.route("/crear_cuenta", methods=['GET', 'POST'])
 def crear_cuenta():
 
     if current_user.is_authenticated:
-        return redirect(url_for('paciente.paciente_index'))
+        page = None
+        if current_user.get_type().get_id() == 1:
+            page = 'administrador.administrador_index'
+        elif current_user.get_type().get_id() == 2:
+            page = 'administrador.doctor_index'
+        elif current_user.get_type().get_id() == 3:
+            page = 'administrador.patient_index'
+        return redirect(url_for(page))
 
-    form = CrearUsuarioForm()
-
+    form = CrearUsuarioForm(formdata=request.form)
+    types = DocumentType.get_all()
+    types.insert(0, DocumentType("Tipo de documento", 0))
+    listTypes=[(i.get_id(), i.get_name()) for i in types]
+    form.documentTypeId.choices = listTypes
     if form.validate_on_submit():
-        nombre = form.nombre.data
-        apellido = form.apellido.data
-        password = form.password.data
-        # Creamos el usuario y lo guardamos
-        #user = User(len(users) + 1, nombre, apellido, password)
-        #users.append(user)
-        # Dejamos al usuario logueado
-        #login_user(user, remember=True)
-        next_page = request.args.get('next', None)
-
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('paciente.paciente_index')
-
-        return redirect(next_page)
+        user = Patient(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now())
+        user.save()
+        next = request.args.get('next', None)
+        if next:
+            return redirect(next)
+        return redirect(url_for('autenticacion.iniciar_sesion'))
+    
     return render_template("crear_cuenta.html", form=form)
 
 

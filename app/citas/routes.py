@@ -7,7 +7,7 @@ from .forms import CrearCitaForm
 from datetime import datetime
 
 # lista de citas
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 15
 
 @appointment_blueprints.route("/citas", methods=['GET', 'POST'])
 @login_required

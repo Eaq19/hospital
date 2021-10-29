@@ -6,7 +6,7 @@ from . import rol_blueprints
 from .forms import CrearRolForm
 
 # lista de roles
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 15
 
 @rol_blueprints.route("/roles", methods=['GET', 'POST'])
 @login_required

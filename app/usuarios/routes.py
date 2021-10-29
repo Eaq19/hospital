@@ -7,7 +7,7 @@ from .forms import CrearUsuarioForm
 from datetime import datetime
 
 # lista de usuarios
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 15
 
 @user_blueprints.route("/usuarios", methods=['GET', 'POST'])
 @login_required

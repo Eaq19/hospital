@@ -5,7 +5,7 @@ from app.autenticacion.models import DocumentType
 from . import documentType_blueprints
 from .forms import CrearDocumentTypeForm
 # lista de DocumentTypes
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 15
 
 @documentType_blueprints.route("/documentTypes", methods=['GET', 'POST'])
 @login_required

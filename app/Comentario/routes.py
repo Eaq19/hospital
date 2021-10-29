@@ -6,7 +6,7 @@ from app.autenticacion.models import Appointment, Comment, Doctor, UserSimple
 from . import comment_blueprints
 from .forms import CrearCommentForm
 # lista de Comments
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 15
 
 @comment_blueprints.route("/comments/<int:id>", methods=['GET', 'POST'])
 @login_required

@@ -10,25 +10,17 @@ class InciarSesionForm(FlaskForm):
     ingresar = SubmitField('Iniciar Sesión')
     
 class CrearUsuarioForm(FlaskForm):
-    nombres = StringField('Nombre', validators=[DataRequired()])
-    
-    apellidos = StringField('Apellidos', validators=[DataRequired()])
-    
+    name = StringField('Nombre', validators=[DataRequired()])
+    lastName = StringField('Apellidos', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    
     re_password = PasswordField('Re-Ingrese Password', validators=[DataRequired()])
+    documentTypeId = SelectField('Tipo Documento', coerce=int)
+    documentNumber = StringField('Número de documento', validators=[DataRequired()])
+    phoneNumber = StringField('Número de telefono', validators=[DataRequired()])
+    birthDate = DateField('Fecha de nacimiento', format='%Y-%m-%d', validators=(validators.DataRequired(),))
+    gender = SelectField('Sexo', choices=[('M', 'Masculino'), ('F', 'Femenino')])
     
-    tipo_documento = SelectField('Tipo Documento', choices=[('TI', 'Tarjeta de identidad'), 
-                                                            ('CC', 'Cédula de ciudadanía'), ('PAS', 'Pasaporte')])
-    
-    num_documento = StringField('Número de documento', validators=[DataRequired()])
-    
-    fecha_nacimiento = DateField('Fecha de nacimiento', format='%Y-%m-%d', validators=(validators.DataRequired(),))
-    
-    sexo = SelectField('Sexo', choices=[('M', 'Masculino'), ('F', 'Femenino')])
-    
-    num_telefono = StringField('Número de teléfono', validators=[DataRequired()])
-    
-    estado = SelectField('ESTADO', choices=[('A','Activo')])
+    is_active = SelectField('Estado', choices=[(1,'Activo')], coerce=int)
     
     guardar = SubmitField('Guardar')
+    
