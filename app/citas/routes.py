@@ -15,7 +15,9 @@ def list():
     page = request.args.get('page', 1, type=int)
     if current_user.get_type().get_id() == 1 :
         appointments = Appointment.get_all()
-    else :
+    elif current_user.get_type().get_id() == 2 :
+        appointments = Appointment.get_by_doctor(current_user.get_id())
+    elif current_user.get_type().get_id() == 3 :
         appointments = Appointment.get_by_patient(current_user.get_id())
     if not appointments :
         appointments = []
