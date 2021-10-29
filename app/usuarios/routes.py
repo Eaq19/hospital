@@ -120,14 +120,18 @@ def create():
     listRoles=[(i.get_id(), i.get_name()) for i in roles]
     form.documentTypeId.choices = listTypes
     form.typeId.choices = listRoles
+    print("1")
     if form.validate_on_submit():
-        if form.typeId.data == "1" :
+        print("2")
+        print(form.typeId.data)
+        if form.typeId.data == "1" or form.typeId.data == 1 :
+            print("3")
             user = Admin(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now(), 1)
             user.save()
-        elif form.typeId.data == "2" :
+        elif form.typeId.data == "2" or form.typeId.data == 2 :
             user = Doctor(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now(), "General")
             user.save()
-        elif form.typeId.data == "3" :
+        elif form.typeId.data == "3" or form.typeId.data == 3 :
             user = Patient(form.name.data, form.lastName.data, form.password.data, form.documentTypeId.data, form.documentNumber.data, form.birthDate.data, form.phoneNumber.data, form.gender.data, datetime.now())
             user.save()
         next = request.args.get('next', None)

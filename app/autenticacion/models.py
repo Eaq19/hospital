@@ -408,6 +408,10 @@ class Appointment(db.Model):
         return Appointment.query.filter_by(doctorId=id)
 
     @staticmethod
+    def get_by_patient(id):
+        return Appointment.query.filter_by(patientId=id)
+
+    @staticmethod
     def get_all():
         return Appointment.query.all()
 

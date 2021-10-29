@@ -16,7 +16,7 @@ def list():
     if current_user.get_type().get_id() == 1 :
         appointments = Appointment.get_all()
     else :
-        appointments = Appointment.get_by_doctor(current_user.get_id())
+        appointments = Appointment.get_by_patient(current_user.get_id())
     if not appointments :
         appointments = []
     return render_template('list_appointment.html', appointments=appointments)
