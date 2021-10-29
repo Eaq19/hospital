@@ -25,8 +25,9 @@
             </div>
 
             <div class="col m3">
-                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;" href="{{ url_for('documentType.create') }}">
-                    <i class="material-icons prefix"  >add</i>
+                <a class="btn blue search-button" style="margin-top: 24px; border-radius: 5px; float: right;"
+                    href="{{ url_for('documentType.create') }}">
+                    <i class="material-icons prefix">add</i>
                 </a>
             </div>
         </div>
@@ -35,6 +36,7 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,10 +44,12 @@
                 <tr>
                     <td>{{ obj.name }}</td>
                     <td>
-                        <a class="btn btn-floating waves-effect waves-light modal-trigger green" href="{{ url_for('documentType.edit', id=obj.id) }}">
+                        <a class="btn btn-floating waves-effect waves-light modal-trigger green"
+                            href="{{ url_for('documentType.edit', id=obj.id) }}">
                             <i class="material-icons">edit</i>
                         </a>
-                        <a href="{{ url_for('documentType.delete', id=obj.id) }}" class="btn btn-floating waves-effect waves-light modal-trigger red">
+                        <a href="{{ url_for('documentType.delete', id=obj.id) }}"
+                            class="btn btn-floating waves-effect waves-light modal-trigger red">
                             <i class="material-icons">delete</i>
                         </a>
                     </td>
